@@ -13,7 +13,7 @@
     "@adminjs/express": "~4.0.1",
     "@adminjs/sequelize": "~2.1.0",
     "@adminjs/upload": "~2.0.1",
-    "adminjs": "^7.5.2",
+    "adminjs": "~5.5.1",
     "express": "~4.17.2",
     "express-formidable": "~1.2.0",
     "pg": "~8.7.1",
