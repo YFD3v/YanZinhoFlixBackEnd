@@ -1,10 +1,8 @@
-// src/database/migrations/XXXXXXXXXXXXXX-create-titles-table.js
-
 "use strict";
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("courses", {
+    await queryInterface.createTable("episodes", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -19,33 +17,36 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DataTypes.TEXT,
       },
-      thumbnail_url: {
-        type: Sequelize.DataTypes.STRING,
-      },
-      featured: {
-        defaultValue: false,
-        type: Sequelize.DataTypes.BOOLEAN,
-      },
-      //Esse OnDelete, serve para que não seja possível excluir uma categoria, caso tenha algum curso cadastrado
-      category_id: {
+      order: {
         allowNull: false,
         type: Sequelize.DataTypes.INTEGER,
-        references: { model: "categories", key: "id" },
+      },
+      video_url: {
+        type: Sequelize.DataTypes.STRING,
+      },
+      seconds_long: {
+        type: Sequelize.DataTypes.INTEGER,
+      },
+      //Esse OnDelete, serve para que não seja possível excluir um curso, caso tenha algum episodio cadastrado
+      course_id: {
+        allowNull: false,
+        type: Sequelize.DataTypes.INTEGER,
+        references: { model: "courses", key: "id" },
         onUpdate: "CASCADE",
         onDelete: "RESTRICT",
       },
       created_at: {
         allowNull: false,
-        type: Sequelize.DataTypes.DATE,
+        type: Sequelize.DATE,
       },
       updated_at: {
         allowNull: false,
-        type: Sequelize.DataTypes.DATE,
+        type: Sequelize.DATE,
       },
     });
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("courses");
+    await queryInterface.dropTable("episodes");
   },
 };

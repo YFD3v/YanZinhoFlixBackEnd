@@ -18,3 +18,10 @@ app.listen(PORT, () => {
 });
 
 /*****/
+//Apos essas configurações principais existe meio que um modelo a se seguir em relação ao banco de dados:
+/*
+  1- Crie a migrate do banco de dados com as propriedades que você deseja
+  2- Crie o model para ter uma forma de acessa o banco de dados pelo JS
+  3- Crie a resource no adminjs com as configuraçções
+  4- Opcional, crie uma seeder para popular o banco de dados
+*/
