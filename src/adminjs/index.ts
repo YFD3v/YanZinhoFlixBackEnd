@@ -5,6 +5,8 @@ import { default as AdminJsExpress } from "@adminjs/express";
 import { default as AdminJsSequelize } from "@adminjs/sequelize";
 import { sequelize } from "../database";
 import { adminJsResources } from "./resources";
+import { User } from "../models";
+import bcrypt from "bcrypt";
 
 // Adaptador da ORM
 AdminJS.registerAdapter(AdminJsSequelize);
@@ -35,5 +37,25 @@ export const adminJs = new AdminJS({
     },
   },
 });
-
-export const adminJsRouter = AdminJsExpress.buildRouter(adminJs);
+//Anteriormente era: export const adminJsRouter = AdminJsExpress.buildRouter(adminjs)
+//Passo 11 - autenticação e tela de login
+export const adminJsRouter = AdminJsExpress.buildAuthenticatedRouter(
+  adminJs,
+  {
+    authenticate: async (email, password) => {
+      const user = await User.findOne({ where: { email } });
+      if (user && user.role === "admin") {
+        const matched = await bcrypt.compare(password, user.password);
+        if (matched) return user;
+      }
+      return false;
+    },
+    cookiePassword: "senha-do-cookie",
+    //Para se livrar dos avisos deprecated do express-session (abaixo)
+  },
+  null,
+  {
+    resave: false,
+    saveUninitialized: false,
+  }
+);
