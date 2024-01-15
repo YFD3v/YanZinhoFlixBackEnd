@@ -12,6 +12,7 @@ AdminJS.registerAdapter(AdminJsSequelize);
 export const adminJs = new AdminJS({
   databases: [sequelize],
   rootPath: "/admin",
+  //Esse resources são todas as resources juntas
   resources: adminJsResources,
   branding: {
     companyName: "YanZinhoFlix",

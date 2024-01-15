@@ -1,6 +1,8 @@
 // Quinto passo - colocando no painel
-
-import { ResourceOptions } from "adminjs";
+import uploadFileFeature from "@adminjs/upload";
+import { FeatureType, ResourceOptions, BaseRecord } from "adminjs";
+import path from "path";
+import * as fs from "fs";
 
 export const courseResourceOptions: ResourceOptions = {
   navigation: "Catálogo",
@@ -31,3 +33,20 @@ export const courseResourceOptions: ResourceOptions = {
     "updatedAt",
   ],
 };
+
+//Passo  9 - fazendo upload das capas dos cursos
+export const courseResourceFeatures: FeatureType[] = [
+  uploadFileFeature({
+    provider: {
+      local: {
+        bucket: path.join(__dirname, "../../../public"),
+      },
+    },
+    properties: {
+      key: "thumbnailUrl",
+      file: "uploadThumbnail",
+    },
+    uploadPath: (record, filename) =>
+      `thumbnails/course-${record.get("id")}/${filename}`,
+  }),
+];
