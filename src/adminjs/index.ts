@@ -7,6 +7,7 @@ import { sequelize } from "../database";
 import { adminJsResources } from "./resources";
 import { User } from "../models";
 import bcrypt from "bcrypt";
+import { locale } from "./locale";
 
 // Adaptador da ORM
 AdminJS.registerAdapter(AdminJsSequelize);
@@ -36,6 +37,8 @@ export const adminJs = new AdminJS({
       },
     },
   },
+  //Passo 12 adicionando tradução
+  locale: locale,
 });
 //Anteriormente era: export const adminJsRouter = AdminJsExpress.buildRouter(adminjs)
 //Passo 11 - autenticação e tela de login
