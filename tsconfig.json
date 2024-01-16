@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["express"],
     "target": "ESNext",
     "module": "commonjs",
     "esModuleInterop": true,
