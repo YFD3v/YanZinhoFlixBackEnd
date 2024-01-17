@@ -36,4 +36,12 @@ export const courseService = {
     );
     return randomFeaturedCourses.slice(0, 3);
   },
+  //Passo 20 - Obtendo cursos lançamentos
+  getTopTenNewest: async () => {
+    const courses = await Course.findAll({
+      limit: 10,
+      order: [["created_at", "DESC"]],
+    });
+    return courses;
+  },
 };

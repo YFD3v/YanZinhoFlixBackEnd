@@ -12,6 +12,8 @@ router.get("/categories/:id", categoriesController.show);
 
 //Passo 19 - obtendo 3 cursos em destaque
 router.get("/courses/featured", coursesController.featured);
+//Passo 20 - obtendo cursos lançamento
+router.get("/courses/newest", coursesController.newest);
 //Passo 18 - obtendo informações de um curso
 router.get("/courses/:id", coursesController.show);
 
