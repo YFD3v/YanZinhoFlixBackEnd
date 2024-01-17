@@ -1,5 +1,5 @@
+import { Request, Response } from "express";
 import { getPaginationParams } from "../helpers/getPaginationParams";
-import { Category } from "../models";
 import { categoryService } from "../services/categoryService";
 //TO DO: RESOLVER ESSES ERROS DA QUERY, JSON E PARAMS
 //Passo 15 - criando a primeira rota
