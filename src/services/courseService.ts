@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import { Course } from "../models";
 //Passo 18 - obtendo informações do curso
 export const courseService = {
@@ -43,5 +44,27 @@ export const courseService = {
       order: [["created_at", "DESC"]],
     });
     return courses;
+  },
+  //Passo 21 - buscando por cursos
+  findByName: async (name: string, page: number, perPage: number) => {
+    const offset = (page - 1) * perPage;
+    const { count, rows } = await Course.findAndCountAll({
+      attributes: ["id", "name", "synopsis", ["thumbnail_url", "thumbnailUrl"]],
+      where: {
+        //O "[Op.iLike]"  vai pegar qualquer conteúdo que corresponda a string, mesmo que seja só uma parte. Existem tambem o [Op.like], mas o ilike é insensível à caixa alta.
+        name: {
+          //As porcentagems tem uma função: se só tiver a porcentagem no final, quer dizer que queremos que comece com determinado termo, se não tiver queremos que termine. Mas como queremos ver em qualquer lugar da string usamos entre porcentagens.
+          [Op.iLike]: `%${name}%`,
+        },
+      },
+      limit: perPage,
+      offset,
+    });
+    return {
+      courses: rows,
+      page,
+      perPage,
+      total: count,
+    };
   },
 };
