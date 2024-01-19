@@ -4,6 +4,7 @@ import { coursesController } from "./controllers/coursesController";
 import { episodesController } from "./controllers/episodesController";
 import { authController } from "./controllers/authController";
 import { ensureAuth, ensureAuthViaQuery } from "./middlewares/auth";
+import { favoritesController } from "./controllers/favoritesController";
 const router = express.Router();
 
 //É importante que a ordem da rotas dinamicas estejam abaixo das rotas específicas, pois o router testa as rotas em ordem. Caso eu coloque uma não dinamica depois o Router pode confundir como uma dinâmica.
@@ -34,6 +35,9 @@ router.get("/episodes/stream", ensureAuthViaQuery, episodesController.stream);
 router.post("/auth/register", authController.register);
 //Passo 24 - login com json web token
 router.post("/auth/login", authController.login);
+
+//Passo 27 - Adicionando favoritos
+router.post("/favorites", ensureAuth, favoritesController.save);
 
 //Passo a passo para criar essas rotas
 //1 - passo criar um controler com os métodos desejados
