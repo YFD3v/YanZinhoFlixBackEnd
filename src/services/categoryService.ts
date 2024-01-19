@@ -22,7 +22,9 @@ export const categoryService = {
   findByIdWithCourses: async (id: string) => {
     const categoryWithCourses = await Category.findByPk(id, {
       attributes: ["id", "name"],
+      //Esse include serve para fazer a busca includin as associações relacionadas
       include: {
+        // Indica que a associação que deve ser incluída é a relação "courses" definida no modelo Category. Isso significa que os cursos associados à categoria também serão buscados.
         association: "courses",
         attributes: [
           "id",

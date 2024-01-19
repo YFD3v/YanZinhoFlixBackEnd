@@ -18,4 +18,16 @@ export const favoritesController = {
         return res.status(400).json({ message: error.message });
     }
   },
+  //Passo 28 - obtendo os cursos favoritos
+  //GET /favorites
+  index: async (req: AuthenticadedRequest, res: Response) => {
+    const userId = req.user!.id;
+    try {
+      const favorites = await favoriteSerivce.findByUserId(userId);
+      return res.json(favorites);
+    } catch (error) {
+      if (error instanceof Error)
+        return res.status(400).json({ message: error.message });
+    }
+  },
 };

@@ -38,6 +38,8 @@ router.post("/auth/login", authController.login);
 
 //Passo 27 - Adicionando favoritos
 router.post("/favorites", ensureAuth, favoritesController.save);
+//Passo 28 - Obtendo os cursos favoritos
+router.get("/favorites", ensureAuth, favoritesController.index);
 
 //Passo a passo para criar essas rotas
 //1 - passo criar um controler com os métodos desejados
