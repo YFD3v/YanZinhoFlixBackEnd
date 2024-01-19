@@ -6,6 +6,7 @@ import { authController } from "./controllers/authController";
 import { ensureAuth, ensureAuthViaQuery } from "./middlewares/auth";
 import { favoritesController } from "./controllers/favoritesController";
 import { likesController } from "./controllers/likesController";
+import { runInContext } from "vm";
 const router = express.Router();
 
 //É importante que a ordem da rotas dinamicas estejam abaixo das rotas específicas, pois o router testa as rotas em ordem. Caso eu coloque uma não dinamica depois o Router pode confundir como uma dinâmica.
@@ -46,6 +47,8 @@ router.delete("/favorites/:id", ensureAuth, favoritesController.delete);
 
 //Passo 30 - Criando o gostei
 router.post("/likes", ensureAuth, likesController.save);
+//Passo 31 - removendo um gostei
+router.delete("/likes/:id", ensureAuth, likesController.delete);
 
 //Passo a passo para criar essas rotas
 //1 - passo criar um controler com os métodos desejados

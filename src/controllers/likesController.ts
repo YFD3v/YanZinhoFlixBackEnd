@@ -27,4 +27,17 @@ export const likesController = {
         return res.status(400).json({ message: error.message });
     }
   },
+  //Passo 31 - Removendo um gostei
+  //DELETE  /likes/:id
+  delete: async (req: AuthenticadedRequest, res: Response) => {
+    const userId = req.user!.id;
+    const courseId = req.params.id;
+    try {
+      await likeService.delete(userId, Number(courseId));
+      res.status(204).send();
+    } catch (error) {
+      if (error instanceof Error)
+        return res.status(400).json({ message: error.message });
+    }
+  },
 };
