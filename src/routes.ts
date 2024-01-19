@@ -3,7 +3,7 @@ import { categoriesController } from "./controllers/categoriesController";
 import { coursesController } from "./controllers/coursesController";
 import { episodesController } from "./controllers/episodesController";
 import { authController } from "./controllers/authController";
-import { ensureAuth } from "./middlewares/auth";
+import { ensureAuth, ensureAuthViaQuery } from "./middlewares/auth";
 const router = express.Router();
 
 //É importante que a ordem da rotas dinamicas estejam abaixo das rotas específicas, pois o router testa as rotas em ordem. Caso eu coloque uma não dinamica depois o Router pode confundir como uma dinâmica.
@@ -27,7 +27,8 @@ router.get("/courses/search", ensureAuth, coursesController.search);
 router.get("/courses/:id", ensureAuth, coursesController.show);
 
 //Passo 22 - streaming de vídeo na api
-router.get("/episodes/stream", episodesController.stream);
+//Passo 26 - Protegendo os videos, foi adicionado o ensureAuthViaQuery garantindo a autorização via query
+router.get("/episodes/stream", ensureAuthViaQuery, episodesController.stream);
 
 //Passo 23 - registro de usuários
 router.post("/auth/register", authController.register);

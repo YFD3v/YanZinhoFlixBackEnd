@@ -1,5 +1,3 @@
-// public/video.html
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -11,9 +9,14 @@
   <body>
     <h2>Testando Streaming</h2>
 
+    <!--
+      Passo 26 
+      Foi adicionado o &token para realização da proteção dos videos via query
+    
+    -->
     <video id="videoplayer" controls>
       <source
-        src="/episodes/stream?videoUrl=videos/course-1/Desktop 04-07-2023 20-14-44.mp4"
+        src="/episodes/stream?videoUrl=videos/course-1/Desktop 04-07-2023 20-14-44.mp4&token="
         type="video/mp4"
       />
     </video>
