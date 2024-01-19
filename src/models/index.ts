@@ -2,6 +2,7 @@ import { Category } from "./Category";
 import { Course } from "./Course";
 import { Episode } from "./Episode";
 import { Favorite } from "./Favorite";
+import { Like } from "./Like";
 import { User } from "./User";
 
 //Definindo as associações dos models e das tabelas.
@@ -26,4 +27,9 @@ Favorite.belongsTo(Course);
 User.hasMany(Favorite, { as: "FavoritesCourses", foreignKey: "user_id" });
 Favorite.belongsTo(User);
 
-export { Category, Course, Episode, Favorite, User };
+//Passo 30 - Criando o gostei
+//Associação de muitos para muitos, fazendo a associação entre likes, user e course
+Course.belongsToMany(User, { through: Like });
+User.belongsToMany(Course, { through: Like });
+
+export { Category, Course, Episode, Favorite, Like, User };
