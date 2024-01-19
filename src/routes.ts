@@ -3,23 +3,28 @@ import { categoriesController } from "./controllers/categoriesController";
 import { coursesController } from "./controllers/coursesController";
 import { episodesController } from "./controllers/episodesController";
 import { authController } from "./controllers/authController";
+import { ensureAuth } from "./middlewares/auth";
 const router = express.Router();
 
 //É importante que a ordem da rotas dinamicas estejam abaixo das rotas específicas, pois o router testa as rotas em ordem. Caso eu coloque uma não dinamica depois o Router pode confundir como uma dinâmica.
 
+//Passo 25 - Middleware de autorização, adicionando a middleware: verificação de rota
+//Obs: tem que ser primeiro que a função do controlador para verificar que o usuário está logado
+
 //Passo 15 primeira rota
-router.get("/categories", categoriesController.index);
+router.get("/categories", ensureAuth, categoriesController.index);
 //Passo 17 - obtendo cursos de uma categoria
-router.get("/categories/:id", categoriesController.show);
+
+router.get("/categories/:id", ensureAuth, categoriesController.show);
 
 //Passo 19 - obtendo 3 cursos em destaque
-router.get("/courses/featured", coursesController.featured);
+router.get("/courses/featured", ensureAuth, coursesController.featured);
 //Passo 20 - obtendo cursos lançamento
 router.get("/courses/newest", coursesController.newest);
 //Passo 21 - buscando por cursos
-router.get("/courses/search", coursesController.search);
+router.get("/courses/search", ensureAuth, coursesController.search);
 //Passo 18 - obtendo informações de um curso
-router.get("/courses/:id", coursesController.show);
+router.get("/courses/:id", ensureAuth, coursesController.show);
 
 //Passo 22 - streaming de vídeo na api
 router.get("/episodes/stream", episodesController.stream);

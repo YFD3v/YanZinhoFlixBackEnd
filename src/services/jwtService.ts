@@ -10,4 +10,9 @@ export const jwtService = {
       expiresIn: expiration,
     });
   },
+
+  //Passo 25 - Middleware de autoriazação
+  verifyToken: (token: string, callbackfn: jwt.VerifyCallback) => {
+    jwt.verify(token, secret, callbackfn);
+  },
 };
