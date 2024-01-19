@@ -3,6 +3,12 @@ import { DataTypes, Model, Optional } from "sequelize";
 import bcrypt from "bcrypt";
 //Passo 10 criação da tabela usuarios
 
+//Passo 24 - login com jsonwebtoken
+type CheckPasswordCallback = (
+  err?: Error | undefined,
+  isSame?: boolean
+) => void;
+
 //Definindo a estrutura de dados
 
 export interface User {
@@ -22,7 +28,10 @@ export interface UserCreationAttributes extends Optional<User, "id"> {}
 //representa um objeto que segue as definições do usuário e seus atributos de criação, permitindo interações e manipulações no contexto do modelo ORM.
 export interface UserInstance
   extends Model<User, UserCreationAttributes>,
-    User {}
+    User {
+  //Passo 24 - login com json webtoken
+  checkPassword: (password: string, callbackfn: CheckPasswordCallback) => void;
+}
 
 //Fazendo a mesma coisa que fizemos na migration, porém, no contexto da aplicação
 //definindo uma padrão à ser seguido quando se desejar inserir dados na tabela
@@ -86,3 +95,18 @@ export const User = sequelize.define<UserInstance, User>(
     },
   }
 );
+//Passo 24 - Login com json webtoken, instalei o pacote jsonwebtoken e -D @types/jsonwebtoken
+//Criando um metódo para o user através do prototype
+User.prototype.checkPassword = function (
+  password: string,
+  callbackfn: CheckPasswordCallback
+) {
+  bcrypt.compare(password, this.password, (err, isSame) => {
+    if (err) {
+      //Houve algum erro, a senha não foi a mesma
+      callbackfn(err, false);
+    } else {
+      callbackfn(err, isSame);
+    }
+  });
+};

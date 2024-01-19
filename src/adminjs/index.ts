@@ -10,6 +10,13 @@ import { dashboardOptions } from "./dashboard";
 import { brandingOptions } from "./branding";
 import { authenticationOptions } from "./authentication";
 
+/*
+  O fato de o adminjs conseguir realizar as operações CRUD sem necessariamente haver uma rota específica é devido a registrar o adaptador na linha 20 e definir o 
+  database como a instancia do sequelize na linha 24.
+  
+  O AdminJS, por padrão, utiliza as convenções do Sequelize para realizar operações CRUD sem a necessidade de rotas específicas para cada operação. Ele cria automaticamente as rotas necessárias para manipulação de recursos com base nos modelos Sequelize.
+*/
+
 // Adaptador da ORM
 AdminJS.registerAdapter(AdminJsSequelize);
 

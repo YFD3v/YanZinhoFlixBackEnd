@@ -26,6 +26,8 @@ router.get("/episodes/stream", episodesController.stream);
 
 //Passo 23 - registro de usuários
 router.post("/auth/register", authController.register);
+//Passo 24 - login com json web token
+router.post("/auth/login", authController.login);
 
 //Passo a passo para criar essas rotas
 //1 - passo criar um controler com os métodos desejados
