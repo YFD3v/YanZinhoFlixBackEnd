@@ -3,7 +3,7 @@
 
 import { Response } from "express";
 import { AuthenticadedRequest } from "../middlewares/auth";
-import { favoriteSerivce } from "../services/favoriteService";
+import { favoriteService } from "../services/favoriteService";
 
 export const favoritesController = {
   //POST /favorites
@@ -11,7 +11,7 @@ export const favoritesController = {
     const userId = req.user!.id;
     const { courseId } = req.body;
     try {
-      const favorite = await favoriteSerivce.create(userId, Number(courseId));
+      const favorite = await favoriteService.create(userId, Number(courseId));
       return res.status(201).json(favorite);
     } catch (error) {
       if (error instanceof Error)
@@ -23,8 +23,21 @@ export const favoritesController = {
   index: async (req: AuthenticadedRequest, res: Response) => {
     const userId = req.user!.id;
     try {
-      const favorites = await favoriteSerivce.findByUserId(userId);
+      const favorites = await favoriteService.findByUserId(userId);
       return res.json(favorites);
+    } catch (error) {
+      if (error instanceof Error)
+        return res.status(400).json({ message: error.message });
+    }
+  },
+  //Passo 29 - excluindo um favorito
+  //DELETE /favorites/:id
+  delete: async (req: AuthenticadedRequest, res: Response) => {
+    const userId = req.user!.id;
+    const courseId = req.params.id;
+    try {
+      await favoriteService.delete(userId, Number(courseId));
+      return res.status(204).send();
     } catch (error) {
       if (error instanceof Error)
         return res.status(400).json({ message: error.message });

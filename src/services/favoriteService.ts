@@ -3,7 +3,7 @@
 import { Favorite } from "../models";
 
 //Criando o service após a criaçaõ do model e das relações no model/index
-export const favoriteSerivce = {
+export const favoriteService = {
   create: async (userId: number, courseId: number) => {
     const favorite = Favorite.create({
       courseId,
@@ -31,5 +31,14 @@ export const favoriteSerivce = {
       userId,
       courses: favorites.map((favorite) => favorite.Course),
     };
+  },
+  //Passo 29 - Excluindo um favorito
+  delete: async (userId: number, courseId: number) => {
+    await Favorite.destroy({
+      where: {
+        userId,
+        courseId,
+      },
+    });
   },
 };
