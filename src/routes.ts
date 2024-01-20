@@ -26,6 +26,8 @@ router.get("/courses/featured", ensureAuth, coursesController.featured);
 router.get("/courses/newest", coursesController.newest);
 //Passo 21 - buscando por cursos
 router.get("/courses/search", ensureAuth, coursesController.search);
+//Passo 33 - obtendo os 1- cursos mais populares
+router.get("/courses/popular", ensureAuth, coursesController.popular);
 //Passo 18 - obtendo informações de um curso
 router.get("/courses/:id", ensureAuth, coursesController.show);
 
