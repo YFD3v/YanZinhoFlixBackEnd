@@ -15,4 +15,15 @@ export const usersController = {
         return res.status(400).json({ message: error.message });
     }
   },
+  //Passo 36 - obtendo informações da conta de usuário
+  //GET /users/current
+  show: async (req: AuthenticatedRequest, res: Response) => {
+    try {
+      const currentUser = req.user!;
+      return res.json(currentUser);
+    } catch (error) {
+      if (error instanceof Error)
+        return res.status(400).json({ message: error.message });
+    }
+  },
 };
