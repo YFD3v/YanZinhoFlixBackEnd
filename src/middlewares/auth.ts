@@ -9,13 +9,14 @@ import { JwtPayload } from "jsonwebtoken";
 import { UserInstance } from "../models/User";
 
 //Essa interface foi criada para que seja possível setar o req.user
-export interface AuthenticadedRequest extends Request {
+//Sempre que precisar o id para realização do método use AuthenticatedRequest
+export interface AuthenticatedRequest extends Request {
   user?: UserInstance | null;
 }
 
 //Protegendo as rotas da aplicação
 export function ensureAuth(
-  req: AuthenticadedRequest,
+  req: AuthenticatedRequest,
   res: Response,
   next: NextFunction
 ) {
@@ -45,29 +46,34 @@ export function ensureAuth(
 
 //Passo 26 - middleware para proteção de videos
 export function ensureAuthViaQuery(
-  req: AuthenticadedRequest,
+  req: AuthenticatedRequest,
   res: Response,
   next: NextFunction
 ) {
   const { token } = req.query;
-  if (token)
+
+  if (!token) {
     return res
       .status(401)
-      .json({ message: "Não autorizado!: token não encontrado" });
-  if (typeof token !== "string")
+      .json({ message: "Não autorizado: nenhum token encontrado" });
+  }
+
+  if (typeof token !== "string") {
     return res
       .status(400)
       .json({ message: "O parâmetro token deve ser do tipo string" });
+  }
 
-  jwtService.verifyToken(token, async (err, decoded) => {
-    if (err || typeof decoded === "undefined")
+  jwtService.verifyToken(token, (err, decoded) => {
+    if (err || typeof decoded === "undefined") {
       return res
         .status(401)
         .json({ message: "Não autorizado: token inválido" });
-    //Achando o user por meio do decoded que seria o payload do usuário assim que o usuário é logado
-    const user = await userService.findByEmail((decoded as JwtPayload).email);
-    //Estou utilizando esse next pois, como na rota vão ter mais de um middleware, esse e a do controller, é necessário passar adiante a execução dos middlewares
-    req.user = user;
-    next();
+    }
+
+    userService.findByEmail((decoded as JwtPayload).email).then((user) => {
+      req.user = user;
+      next();
+    });
   });
 }

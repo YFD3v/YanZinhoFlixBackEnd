@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { courseService } from "../services/courseService";
 import { getPaginationParams } from "../helpers/getPaginationParams";
-import { AuthenticadedRequest } from "../middlewares/auth";
+import { AuthenticatedRequest } from "../middlewares/auth";
 import { likeService } from "../services/likeService";
 import { favoriteService } from "../services/favoriteService";
 
@@ -47,7 +47,7 @@ export const coursesController = {
 
   //Get /courses/:id
   //Passo 32 - Atualizando o endpoint de cursos foi trocado o tipo de req para AuthenticatedRequest, no passo 18 era Request do express
-  show: async (req: AuthenticadedRequest, res: Response) => {
+  show: async (req: AuthenticatedRequest, res: Response) => {
     //Passo 32 - pegando o userId
     const userId = req.user!.id;
 

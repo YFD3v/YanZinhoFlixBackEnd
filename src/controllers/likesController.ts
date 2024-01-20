@@ -2,12 +2,12 @@
 //Fazendo isso depois da migration,model,relações e service
 
 import { Response } from "express";
-import { AuthenticadedRequest } from "../middlewares/auth";
+import { AuthenticatedRequest } from "../middlewares/auth";
 import { likeService } from "../services/likeService";
 
 export const likesController = {
   //POST  /likes
-  save: async (req: AuthenticadedRequest, res: Response) => {
+  save: async (req: AuthenticatedRequest, res: Response) => {
     const userId = req.user!.id;
     //Uma dica para saber quando usar o req.body é pensar o seguinte:
     /*
@@ -29,7 +29,7 @@ export const likesController = {
   },
   //Passo 31 - Removendo um gostei
   //DELETE  /likes/:id
-  delete: async (req: AuthenticadedRequest, res: Response) => {
+  delete: async (req: AuthenticatedRequest, res: Response) => {
     const userId = req.user!.id;
     const courseId = req.params.id;
     try {

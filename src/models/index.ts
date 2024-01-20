@@ -4,6 +4,7 @@ import { Episode } from "./Episode";
 import { Favorite } from "./Favorite";
 import { Like } from "./Like";
 import { User } from "./User";
+import { WatchTime } from "./WatchTime";
 
 //Definindo as associações dos models e das tabelas.
 
@@ -32,4 +33,9 @@ Favorite.belongsTo(User);
 Course.belongsToMany(User, { through: Like });
 User.belongsToMany(Course, { through: Like });
 
-export { Category, Course, Episode, Favorite, Like, User };
+//Passo 34 - Adicionando o progresso de um episodio
+//Fazendo a mesma ideia que fiz com o Like
+Episode.belongsToMany(User, { through: WatchTime });
+User.belongsToMany(Episode, { through: WatchTime });
+
+export { Category, Course, Episode, Favorite, Like, User, WatchTime };

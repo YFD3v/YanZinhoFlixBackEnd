@@ -34,6 +34,17 @@ router.get("/courses/:id", ensureAuth, coursesController.show);
 //Passo 22 - streaming de vídeo na api
 //Passo 26 - Protegendo os videos, foi adicionado o ensureAuthViaQuery garantindo a autorização via query
 router.get("/episodes/stream", ensureAuthViaQuery, episodesController.stream);
+//Passo 34 - Adicionando o progresso de um episódio
+router.get(
+  "/episodes/:id/watchTime",
+  ensureAuth,
+  episodesController.getWatchTime
+);
+router.post(
+  "/episodes/:id/watchTime",
+  ensureAuth,
+  episodesController.setWatchTime
+);
 
 //Passo 23 - registro de usuários
 router.post("/auth/register", authController.register);

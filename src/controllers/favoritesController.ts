@@ -2,12 +2,12 @@
 //Após a criaçaõ da migration, model e relações, e o service
 
 import { Response } from "express";
-import { AuthenticadedRequest } from "../middlewares/auth";
+import { AuthenticatedRequest } from "../middlewares/auth";
 import { favoriteService } from "../services/favoriteService";
 
 export const favoritesController = {
   //POST /favorites
-  save: async (req: AuthenticadedRequest, res: Response) => {
+  save: async (req: AuthenticatedRequest, res: Response) => {
     const userId = req.user!.id;
     const { courseId } = req.body;
     try {
@@ -20,7 +20,7 @@ export const favoritesController = {
   },
   //Passo 28 - obtendo os cursos favoritos
   //GET /favorites
-  index: async (req: AuthenticadedRequest, res: Response) => {
+  index: async (req: AuthenticatedRequest, res: Response) => {
     const userId = req.user!.id;
     try {
       const favorites = await favoriteService.findByUserId(userId);
@@ -32,7 +32,7 @@ export const favoritesController = {
   },
   //Passo 29 - excluindo um favorito
   //DELETE /favorites/:id
-  delete: async (req: AuthenticadedRequest, res: Response) => {
+  delete: async (req: AuthenticatedRequest, res: Response) => {
     const userId = req.user!.id;
     const courseId = req.params.id;
     try {
