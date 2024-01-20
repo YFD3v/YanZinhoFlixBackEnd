@@ -1,5 +1,32 @@
 import { User } from "../models";
+import { EpisodeInstance } from "../models/Episode";
 import { UserCreationAttributes } from "../models/User";
+
+//Passo 35 - obtendo a lista de continuar assistindo
+
+function filterLastEpisodeByCourse(episodes: EpisodeInstance[]) {
+  const coursesOnList: number[] = [];
+
+  const lastEpisodes = episodes.reduce((currentList, episode) => {
+    if (!coursesOnList.includes(episode.courseId)) {
+      coursesOnList.push(episode.courseId);
+      currentList.push(episode);
+      return currentList;
+    }
+
+    const episodeFromSameCourse = currentList.find(
+      (ep) => ep.courseId === episode.courseId
+    );
+    if (episodeFromSameCourse!.order > episode.order) return currentList;
+
+    const listWithoutEpisodeFromSameCourse = currentList.filter(
+      (ep) => ep.courseId !== episode.courseId
+    );
+    listWithoutEpisodeFromSameCourse.push(episode);
+    return listWithoutEpisodeFromSameCourse;
+  }, [] as EpisodeInstance[]);
+  return lastEpisodes;
+}
 
 export const userService = {
   findByEmail: async (email: string) => {
@@ -9,5 +36,46 @@ export const userService = {
   create: async (attributes: UserCreationAttributes) => {
     const user = await User.create(attributes);
     return user;
+  },
+  //Passo 35 - Obtendo a lista de continuar assistindo
+  getKeepWatchingList: async (id: number) => {
+    const userWithWatchingEpisodes = await User.findByPk(id, {
+      include: {
+        attributes: [
+          "id",
+          "name",
+          "order",
+          ["seconds_long", "secondsLong"],
+          ["video_url", "videoUrl"],
+          ["course_id", "courseId"],
+        ],
+        association: "Episodes",
+        include: [
+          {
+            attributes: [
+              "id",
+              "name",
+              "synopsis",
+              ["thumbnail_url", "thumbnailUrl"],
+            ],
+            association: "Course",
+          },
+        ],
+        through: {
+          as: "watchTime",
+          attributes: ["seconds", ["updated_at", "updatedAt"]],
+        },
+      },
+    });
+    if (!userWithWatchingEpisodes) throw new Error("Usuário não encontrado");
+    const keepWatchingList = filterLastEpisodeByCourse(
+      userWithWatchingEpisodes.Episodes!
+    );
+
+    keepWatchingList.sort((a, b) =>
+      // @ts-ignore
+      a.watchTime.upddatedAt < b.watchTime.updatedAt ? 1 : -1
+    );
+    return keepWatchingList;
   },
 };

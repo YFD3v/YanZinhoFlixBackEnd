@@ -1,6 +1,7 @@
 import { sequelize } from "../database";
 import { DataTypes, Model, Optional } from "sequelize";
 import bcrypt from "bcrypt";
+import { EpisodeInstance } from "./Episode";
 //Passo 10 criação da tabela usuarios
 
 //Passo 24 - login com jsonwebtoken
@@ -29,6 +30,8 @@ export interface UserCreationAttributes extends Optional<User, "id"> {}
 export interface UserInstance
   extends Model<User, UserCreationAttributes>,
     User {
+  //Passo 35 - obtendo a lista de continuar assintindo
+  Episodes?: EpisodeInstance[];
   //Passo 24 - login com json webtoken
   checkPassword: (password: string, callbackfn: CheckPasswordCallback) => void;
 }

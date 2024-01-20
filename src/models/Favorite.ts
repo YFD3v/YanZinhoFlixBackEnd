@@ -16,6 +16,7 @@ export interface Favorite {
 //representa um objeto que segue as definições do favorito permitindo interações e manipulações no contexto do modelo ORM.
 
 export interface FavoriteInstance extends Model<Favorite>, Favorite {
+  //Essa é uma estratégia para a associação das tabelas, como na criaçaõ da tabela favorites não existiam essas propriedades, mas para fazer a relação elas são uteis a gente adiciona aqui na instancia
   Course?: CourseInstance;
   User?: UserInstance;
 }

@@ -2,6 +2,7 @@
 
 import { sequelize } from "../database";
 import { DataTypes, Model, Optional } from "sequelize";
+import { WatchTimeInstance } from "./WatchTime";
 
 //Define a estrutura de dados que representa o episodio
 export interface Episode {
@@ -22,7 +23,10 @@ export interface EpisodeCreationAttributes
 
 export interface EpisodeInstance
   extends Model<Episode, EpisodeCreationAttributes>,
-    Episode {}
+    Episode {
+  //Passo 35 - Obtendo a lista de continuar assintindo
+  watchTime?: WatchTimeInstance;
+}
 
 //Fazendo a mesma coisa que fizemos na migration, porém, no contexto da aplicação
 //definindo uma padrão à ser seguido quando se desejar inserir dados na tabela
