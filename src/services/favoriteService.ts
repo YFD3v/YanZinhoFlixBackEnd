@@ -41,4 +41,9 @@ export const favoriteService = {
       },
     });
   },
+  //Passo 32 - Atualizando o endpoint de cursos
+  isFavorited: async (userId: number, courseId: number) => {
+    const favorite = await Favorite.findOne({ where: { userId, courseId } });
+    return favorite !== null;
+  },
 };
