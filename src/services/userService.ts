@@ -78,4 +78,22 @@ export const userService = {
     );
     return keepWatchingList;
   },
+  //Passo 37 - atualizando informações do usuário
+  update: async (
+    id: number,
+    attributes: {
+      firstName: string;
+      lastName: string;
+      phone: string;
+      birth: Date;
+      email: string;
+    }
+  ) => {
+    //Esse returning serve para ele retornar o resultado do banco de dados (SO no POSTGRESS)
+    const [affectedRows, updatedUsers] = await User.update(attributes, {
+      where: { id },
+      returning: true,
+    });
+    return updatedUsers[0];
+  },
 };

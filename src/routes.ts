@@ -68,6 +68,8 @@ router.delete("/likes/:id", ensureAuth, likesController.delete);
 router.get("/users/current/watching", ensureAuth, usersController.watching);
 //Passo 36 - obtendo informações da conta de usuário
 router.get("/users/current", ensureAuth, usersController.show);
+//Passo 37 - Atualizando informações do usuário
+router.put("/users/current", ensureAuth, usersController.update);
 
 //Passo a passo para criar essas rotas
 //1 - passo criar um controler com os métodos desejados
