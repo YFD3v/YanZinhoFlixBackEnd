@@ -26,7 +26,7 @@ export const usersController = {
         return res.status(400).json({ message: error.message });
     }
   },
-  //Passo 37 - Atualizando informações do usuário
+  //Passo 37 - Atualizando informações do usuário (exceto senha)
   //PUT /users/current
   update: async (req: AuthenticatedRequest, res: Response) => {
     const { id } = req.user!;
@@ -44,5 +44,24 @@ export const usersController = {
       if (error instanceof Error)
         return res.status(400).json({ message: error.message });
     }
+  },
+  //Passo 38 - Atualizando a senha
+  //PUT /users/current/password
+  updatePassword: async (req: AuthenticatedRequest, res: Response) => {
+    const user = req.user!;
+    const { currentPassword, newPassword } = req.body;
+
+    user.checkPassword(currentPassword, async (err, isSame) => {
+      try {
+        if (err) return res.status(400).json({ message: err.message });
+        if (!isSame)
+          return res.status(400).json({ message: "Senha incorreta" });
+        await userService.updatePassword(user.id, newPassword);
+        return res.status(204).send();
+      } catch (error) {
+        if (error instanceof Error)
+          return res.status(400).json({ message: error.message });
+      }
+    });
   },
 };

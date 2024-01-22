@@ -96,4 +96,13 @@ export const userService = {
     });
     return updatedUsers[0];
   },
+  //Passo 38 - Atualizando a senha
+  updatePassword: async (id: number, password: string) => {
+    const [affectedRows, updatedUsers] = await User.update(
+      { password },
+      { where: { id }, returning: true, individualHooks: true }
+      //Esse individualHooks serve para executar os hooks Before e after
+      //Então ele fará a criptografia da senha, pois no model User foi colocado um hook de before para que antes de a senha ser salva ela fosse criptografada
+    );
+  },
 };

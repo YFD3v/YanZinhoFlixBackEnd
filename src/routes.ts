@@ -70,6 +70,12 @@ router.get("/users/current/watching", ensureAuth, usersController.watching);
 router.get("/users/current", ensureAuth, usersController.show);
 //Passo 37 - Atualizando informações do usuário
 router.put("/users/current", ensureAuth, usersController.update);
+//Passo 38 - Atualizando a senha
+router.put(
+  "/users/current/password",
+  ensureAuth,
+  usersController.updatePassword
+);
 
 //Passo a passo para criar essas rotas
 //1 - passo criar um controler com os métodos desejados
