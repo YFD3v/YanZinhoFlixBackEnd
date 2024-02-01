@@ -27,7 +27,7 @@ function filterLastEpisodeByCourse(episodes: EpisodeInstance[]) {
   }, [] as EpisodeInstance[]);
   return lastEpisodes;
 }
-
+//Passo 23 - Registro de usuários
 export const userService = {
   findByEmail: async (email: string) => {
     const user = await User.findOne({ where: { email } });

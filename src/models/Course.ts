@@ -17,8 +17,7 @@ export interface Course {
 export interface CourseCreationAttributes
   extends Optional<Course, "id" | "thumbnailUrl" | "featured"> {}
 
-//Utilizada para representar uma instância específica de um curso que pode ser manipulada no contexto do modelo de dados definido pela interface Course e CourseCreationAttributes. Incorpora tanto as propriedades do curso como aquelas definidas para a criação.
-//representa um objeto que segue as definições do curso e seus atributos de criação, permitindo interações e manipulações no contexto do modelo ORM.
+//Esta interface representa uma instância específica do modelo de curso que pode ser manipulada no contexto do modelo de dados definido por Course e CourseCreationAttributes. Ela estende tanto a interface Model quanto a Course, incorporando as propriedades e métodos associados ao modelo Sequelize. Isso inclui métodos como create, update, entre outros.
 
 export interface CourseInstance
   extends Model<Course, CourseCreationAttributes>,
@@ -27,6 +26,18 @@ export interface CourseInstance
 //Fazendo a mesma coisa que fizemos na migration, porém, no contexto da aplicação
 //definindo uma padrão à ser seguido quando se desejar inserir dados na tabela
 
+/*
+Em relação ao tipo genérico:
+  A utilização de tipos genéricos na função sequelize.define tem a finalidade de fornecer informações adicionais ao Sequelize sobre a estrutura do modelo. Vamos analisar a assinatura da função sequelize.define e a explicação dos tipos genéricos no seu exemplo:
+
+  sequelize.define<InstanceType, ModelAttributes>("modelName", attributes)
+
+  InstanceType (EpisodeInstance): Este é o tipo que representa a instância específica do modelo. Ou seja, quando você cria uma instância de "Episode" usando este modelo, ela terá o tipo EpisodeInstance. Isso é útil para ter autocompletar e garantir tipos seguros ao trabalhar com instâncias específicas do modelo.
+
+  ModelAttributes (Episode): Este é o tipo que representa os atributos do modelo. Ele define a estrutura dos dados que serão armazenados no banco de dados. Quando você consulta ou cria um novo registro no banco de dados usando este modelo, os atributos são validados e mapeados de acordo com este tipo.
+
+*/
+// O segundo parâmetro Course é usado para fornecer informações sobre a estrutura da tabela no banco de dados.
 export const Course = sequelize.define<CourseInstance, Course>("Course", {
   id: {
     allowNull: false,

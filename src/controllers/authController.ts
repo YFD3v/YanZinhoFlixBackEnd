@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { userService } from "../services/userService";
 import { jwtService } from "../services/jwtService";
+//Passo 23 - registro de usuários
 
 export const authController = {
   //POST /auth/register

@@ -8,7 +8,7 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    //Selecionando os ids das categorias para a propriedade category_id, pois essas tabelas possuem uma associação
+    //Selecionando todos os ids das categorias para a propriedade category_id, pois essas tabelas possuem uma associação
     const [categories] = await queryInterface.sequelize.query(
       "SELECT id FROM categories;"
     );

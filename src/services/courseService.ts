@@ -6,7 +6,7 @@ export const courseService = {
     const courseWithEpisodes = await Course.findByPk(id, {
       attributes: ["id", "name", "synopsis", ["thumbnail_url", "thumbnailUrl"]],
       include: {
-        //A forma padrão do sequelize fazer a associação é pegando o nome que criamos e colocar no plura
+        //A forma padrão do sequelize fazer a associação é pegando o nome que criamos e colocar no plural
         //Ex: Episode -> Episodes . Olhe em models/index.ts
         association: "episodes",
         attributes: [

@@ -39,17 +39,19 @@ export const episodeResourceOptions: ResourceOptions = {
 
 export const episodeResourceFeatures: FeatureType[] = [
   uploadFileFeature({
+    //Onde ficara os arquivos
     provider: {
       local: {
         bucket: path.join(__dirname, "..", "..", "..", "uploads"),
+        opts: {},
       },
     },
 
     properties: {
-      //Nome da propriedade que será referência no banco de dados
+      //Nome da propriedade que será referência no banco de dados, no caso, da instãncia
       key: "videoUrl",
       //Representa o input onde vai fazer o upload la no painel administrastivo
-      //Por isso na existe a propriedade UploadVideo no episodeResourceOptions
+      //Por isso nao existe a propriedade UploadVideo no episodeResourceOptions
       //Pois não se envia vídeo para o banco de dados e sim para algum armazenamento externo
       file: "uploadVideo",
     },

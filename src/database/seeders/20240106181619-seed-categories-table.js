@@ -9,7 +9,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     //Tabela, array de registros
-    //Pelo fato de não utilizarmos o model do sequelize, tem que crair manualmente as propriedades em snake_case e criar as timestamps .
+    //Pelo fato de não utilizarmos o model do sequelize, tem que criar manualmente as propriedades em snake_case e criar as timestamps .
     await queryInterface.bulkInsert(
       "categories",
       [

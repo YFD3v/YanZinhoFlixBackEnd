@@ -51,6 +51,7 @@ export const usersController = {
     const user = req.user!;
     const { currentPassword, newPassword } = req.body;
 
+    //Importante fazer essa verificação para trazer segurança, pois em é necessário da senha atual para mudar a senha.
     user.checkPassword(currentPassword, async (err, isSame) => {
       try {
         if (err) return res.status(400).json({ message: err.message });

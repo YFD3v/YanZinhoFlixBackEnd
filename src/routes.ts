@@ -6,7 +6,6 @@ import { authController } from "./controllers/authController";
 import { ensureAuth, ensureAuthViaQuery } from "./middlewares/auth";
 import { favoritesController } from "./controllers/favoritesController";
 import { likesController } from "./controllers/likesController";
-import { runInContext } from "vm";
 import { usersController } from "./controllers/usersController";
 const router = express.Router();
 
@@ -18,7 +17,6 @@ const router = express.Router();
 //Passo 15 primeira rota
 router.get("/categories", ensureAuth, categoriesController.index);
 //Passo 17 - obtendo cursos de uma categoria
-
 router.get("/categories/:id", ensureAuth, categoriesController.show);
 
 //Passo 19 - obtendo 3 cursos em destaque

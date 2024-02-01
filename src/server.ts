@@ -1,4 +1,8 @@
 //Primeiro passo, após instalar dependencias - inicializar o servidor
+//Passo 40 - Depploy aula 2 - fazendo as correções do npm e do adminjs e algumas correções de variaveis de ambiente. Foi instalado o dotenv e env-var e criado o arquivo .env. TRÁS SEGURANÇA
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import cors from "cors";
 import { sequelize } from "./database";
@@ -52,10 +56,3 @@ app.listen(PORT, () => {
 });
 
 /*****/
-//Apos essas configurações principais existe meio que um modelo a se seguir em relação ao banco de dados:
-/*
-  1- Crie a migrate do banco de dados com as propriedades que você deseja
-  2- Crie o model para ter uma forma de acessa o banco de dados pelo JS
-  3- Crie a resource no adminjs com as configuraçções
-  4- Opcional, crie uma seeder para popular o banco de dados
-*/

@@ -38,6 +38,7 @@ export function ensureAuth(
 
     //Achando o user por meio do decoded que seria o payload do usuário assim que o usuário é logado
     const user = await userService.findByEmail((decoded as JwtPayload).email);
+    //EXTREMA IMPORTÂNCIA FAZER ISSO, pois servirá para realizaçaõ de funções posteriores
     req.user = user;
     //Estou utilizando esse next pois, como na rota vão ter mais de um middleware, esse e a do controller, é necessário passar adiante a execução dos middlewares
     next();
@@ -72,6 +73,7 @@ export function ensureAuthViaQuery(
     }
 
     userService.findByEmail((decoded as JwtPayload).email).then((user) => {
+      //EXTREMA IMPORTÂNCIA FAZER ISSO, pois servirá para realizaçaõ de funções posteriores
       req.user = user;
       next();
     });

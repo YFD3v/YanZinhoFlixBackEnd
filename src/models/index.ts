@@ -21,10 +21,10 @@ Episode.belongsTo(Course);
 //Associação de muitos para muitos que sera evidenciada no model Favorite
 Course.belongsToMany(User, { through: Favorite });
 User.belongsToMany(Course, { through: Favorite });
-//Associação de cursos para favorite, dizendo quais usuarios favoritaram o curso
+//Associação de cursos para favorite, dizendo quais usuarios favoritaram o curso. Um curso pode ter muitos registros na tabela Favorite. A opção foreignKey: "course_id" especifica que a chave estrangeira na tabela Favorite relacionada ao Course é chamada course_id.
 Course.hasMany(Favorite, { as: "FavoritesUsers", foreignKey: "course_id" });
 Favorite.belongsTo(Course);
-//Associação de usuários para favorite, dizendo quais cursos o usuário favoritou
+//Associação de usuários para favorite, dizendo quais cursos o usuário favoritou. Um usuário pode ter muitos registros na tabela Favorite. A opção foreignKey: "user_id" especifica que a chave estrangeira na tabela Favorite relacionada ao User é chamada user_id.
 User.hasMany(Favorite, { as: "FavoritesCourses", foreignKey: "user_id" });
 Favorite.belongsTo(User);
 

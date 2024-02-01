@@ -12,6 +12,7 @@ export const episodeService = {
     range: string | undefined
   ) => {
     const filePath = path.join(__dirname, "..", "..", "uploads", videoUrl);
+    //Pegando as estatiticas do arquivo, como tamanho
     const fileStat = fs.statSync(filePath);
 
     if (range) {
@@ -31,13 +32,14 @@ export const episodeService = {
       const head = {
         "Content-Range": `bytes ${start}-${end}/${fileStat.size}`,
         "Accept-Ranges": "bytes",
+        //Para o vídeo completo
         "Content-Length": chunckSize,
         "Content-type": "video/mp4",
       };
       //Esse status code de 206 é para contéudo parcial
       res.writeHead(206, head);
 
-      //Jogando a stream em algum lugar
+      //Transmite a parte específica do vídeo (ou o vídeo completo) de volta ao cliente.
       file.pipe(res);
     } else {
       //Se ele não passou o range, podemos devolver o vídeo todo

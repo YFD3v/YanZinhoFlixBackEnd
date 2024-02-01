@@ -9,6 +9,13 @@ import { locale } from "./locale";
 import { dashboardOptions } from "./dashboard";
 import { brandingOptions } from "./branding";
 import { authenticationOptions } from "./authentication";
+//Passo 40.1 - foi instalado o connect-session-sequelize e -D @types/express-session, poís quando a aplicaçaõ esta no modo produção há um problema com a forma de armazenamento da sessão
+import session from "express-session";
+import connectSession from "connect-session-sequelize";
+import { ADMINJS_COOKIE_PASSWORD } from "../config/enviroment";
+const SequelizeStore = connectSession(session.Store);
+const store = new SequelizeStore({ db: sequelize });
+store.sync();
 
 /*
   O fato de o adminjs conseguir realizar as operações CRUD sem necessariamente haver uma rota específica é devido a registrar o adaptador na linha 20 e definir o 
@@ -38,7 +45,12 @@ export const adminJsRouter = AdminJsExpress.buildAuthenticatedRouter(
   authenticationOptions,
   null,
   {
+    //sessão não será salva novamente no armazenamento
     resave: false,
+    //significa que as sessões não serão salvas para solicitações que não modificaram os dados da sessão
     saveUninitialized: false,
+    //Passo 40.1
+    store: store,
+    secret: ADMINJS_COOKIE_PASSWORD,
   }
 );

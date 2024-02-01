@@ -13,8 +13,7 @@ export interface Category {
 //Estamos dizendo que na criação de uma categoria o campo id é opcional pois é o banco de dados que vai realizar a criação id, mas na interface estamos colocando o id pq é o padrão de todas as propriedades que cada categoria vai ter.
 export interface CategoryCreationAttributes extends Optional<Category, "id"> {}
 
-//Utilizada para representar uma instância específica de um categoria que pode ser manipulada no contexto do modelo de dados definido pela interface Category e CategoryCreationAttributes. Incorpora tanto as propriedades do categoria como aquelas definidas para a criação.
-//representa um objeto que segue as definições da categoria e seus atributos de criação, permitindo interações e manipulações no contexto do modelo ORM.
+//Esta interface representa uma instância específica do modelo de categoria que pode ser manipulada no contexto do modelo de dados definido por Category e CategoryCreationAttributes. Ela estende tanto a interface Model quanto a Category, incorporando as propriedades e métodos associados ao modelo Sequelize. Isso inclui métodos como create, update, entre outros.
 export interface CategoryInstance
   extends Model<Category, CategoryCreationAttributes>,
     Category {}
@@ -22,6 +21,17 @@ export interface CategoryInstance
 //Fazendo a mesma coisa que fizemos na migration, porém, no contexto da aplicação
 //definindo uma padrão à ser seguido quando se desejar inserir dados na tabela
 
+//Em relação à esse tipo genérico:
+/*
+  A utilização de tipos genéricos na função sequelize.define tem a finalidade de fornecer informações adicionais ao Sequelize sobre a estrutura do modelo. Vamos analisar a assinatura da função sequelize.define e a explicação dos tipos genéricos no seu exemplo:
+
+  sequelize.define<InstanceType, ModelAttributes>("modelName", attributes)
+
+  InstanceType (EpisodeInstance): Este é o tipo que representa a instância específica do modelo. Ou seja, quando você cria uma instância de "Episode" usando este modelo, ela terá o tipo EpisodeInstance. Isso é útil para ter autocompletar e garantir tipos seguros ao trabalhar com instâncias específicas do modelo.
+
+  ModelAttributes (Episode): Este é o tipo que representa os atributos do modelo. Ele define a estrutura dos dados que serão armazenados no banco de dados. Quando você consulta ou cria um novo registro no banco de dados usando este modelo, os atributos são validados e mapeados de acordo com este tipo.
+
+*/
 export const Category = sequelize.define<CategoryInstance, Category>(
   "Category",
   {
